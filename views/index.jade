@@ -1,0 +1,170 @@
+!!! 5
+html(lang='en')
+    head
+    body
+        h1 Check out these tweets
+
+        h3 Find out how many users there are! 
+        |  <span id='userCount'></span>
+        <br/>
+        input#users(type='submit')
+
+        h3 Which twitter users link the most to other users?
+        |  <span id='linkUsersList'></span>
+        <br/>
+        input#linkUser(type='submit')
+
+        h3 Who are the most mentioned Twitter users?
+        |  <span id='mentionedUsersList'></span>
+        <br/>
+        input#mentionedUsers(type='submit')
+
+        h3 Who are the most active Twitter users (top ten)?
+        |  <span id='activeUsersList'></span>
+        <br/>
+        input#activeUsers(type='submit')
+
+        h3 Who are the five most grumpy (most negative tweets) and the most happy (most positive tweets)? (Provide five users for each group)
+        |  <span id='grumpyUsersList'></span>
+        <br/>
+        <br/>
+        |  <span id='happyUsersList'></span>
+        <br/>
+        input#polarUsers(type='submit')
+
+script.
+    let baseUrl = 'http://localhost:8999'
+
+    function countUsers() {
+        let endpoint = '/users';
+        let url = baseUrl + endpoint;
+        let xhr = new XMLHttpRequest();
+
+        xhr.open('GET', url);
+
+        xhr.onload = function() {   
+            if (xhr.status === 200 || xhr.status === 204) {
+                document.getElementById('userCount').textContent=xhr.response;
+                console.log("response", xhr.response);
+            } else {
+                // fail reject(Error("Error Uploading File"));
+                console.log("error with request");
+            }
+        };
+        xhr.send();
+    }
+
+    function linksMost() {
+        let endpoint = '/linker';
+        let url = baseUrl + endpoint;
+        let xhr = new XMLHttpRequest();
+
+        xhr.open('GET', url);
+
+        xhr.onload = function() {   
+            if (xhr.status === 200 || xhr.status === 204) {
+                document.getElementById('linkUsersList').textContent=xhr.response;
+                console.log("response", xhr.response);
+            } else {
+                // fail reject(Error("Error Uploading File"));
+                console.log("error with request");
+            }
+        };
+        xhr.send();
+    }
+
+    function mostMentioned() {
+        let endpoint = '/mentioned';
+        let url = baseUrl + endpoint;
+        let xhr = new XMLHttpRequest();
+
+        xhr.open('GET', url);
+
+        xhr.onload = function() {   
+            if (xhr.status === 200 || xhr.status === 204) {
+                document.getElementById('mentionedUsersList').textContent=xhr.response;
+                console.log("response", xhr.response);
+            } else {
+                // fail reject(Error("Error Uploading File"));
+                console.log("error with request");
+            }
+        };
+        xhr.send();
+    }
+
+    function mostActive() {
+        let endpoint = '/active';
+        let url = baseUrl + endpoint;
+        let xhr = new XMLHttpRequest();
+
+        xhr.open('GET', url);
+
+        xhr.onload = function() {   
+            if (xhr.status === 200 || xhr.status === 204) {
+                document.getElementById('activeUsersList').textContent=xhr.response;
+                console.log("response", xhr.response);
+            } else {
+                // fail reject(Error("Error Uploading File"));
+                console.log("error with request");
+            }
+        };
+        xhr.send();
+    }
+
+    function grumpyUsers() {
+        let endpoint = '/negative';
+        let url = baseUrl + endpoint;
+        let xhr = new XMLHttpRequest();
+
+        xhr.open('GET', url);
+
+        xhr.onload = function() {   
+            if (xhr.status === 200 || xhr.status === 204) {
+                document.getElementById('grumpyUsersList').textContent=xhr.response;
+                console.log("response", xhr.response);
+            } else {
+                // fail reject(Error("Error Uploading File"));
+                console.log("error with request");
+            }
+        };
+        xhr.send();
+    }
+
+    function happyUsers() {
+        let endpoint = '/positive';
+        let url = baseUrl + endpoint;
+        let xhr = new XMLHttpRequest();
+
+        xhr.open('GET', url);
+
+        xhr.onload = function() {   
+            if (xhr.status === 200 || xhr.status === 204) {
+                document.getElementById('happyUsersList').textContent=xhr.response;
+                console.log("response", xhr.response);
+            } else {
+                // fail reject(Error("Error Uploading File"));
+                console.log("error with request");
+            }
+        };
+        xhr.send();
+    }
+
+    function polarityFetch() {
+        grumpyUsers();
+        happyUsers();
+    }
+    
+    var elem = document.getElementById('users');
+    elem.addEventListener('click', countUsers); 
+
+    var elem1 = document.getElementById('linkUser');
+    elem1.addEventListener('click', linksMost); 
+
+    var elem2 = document.getElementById('mentionedUsers');
+    elem2.addEventListener('click', mostMentioned); 
+
+    var elem3 = document.getElementById('activeUsers');
+    elem3.addEventListener('click', mostActive); 
+
+    var elem4 = document.getElementById('polarUsers');
+    elem4.addEventListener('click', polarityFetch);
